@@ -1,14 +1,19 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import Loading from './Loading';
 
 function Table() {
   const {
     data,
-    loading } = useContext(PlanetsContext);
-  useEffect(() => {
+    loading,
+    filterByName } = useContext(PlanetsContext);
+  const [filteredData, setFilteredData] = useState(data); // array filtrado renderizado na tabela
 
-  }, []);
+  // Atualiza array filtrado que será renderizado na tebela
+  useEffect(() => {
+    const search = data.filter((planet) => planet.name.includes(filterByName.name)); // filtra o array da tabela de acordo com o
+    setFilteredData(search); // atualiza o array filtrado
+  }, [data, filterByName]);
 
   if (loading) { return <Loading />; }
 
@@ -33,7 +38,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map((dataElement) => (
+        {filteredData.map((dataElement) => (
           <tr key={ dataElement.name }>
             <td>{dataElement.name}</td>
             <td>{dataElement.rotation_period}</td>
