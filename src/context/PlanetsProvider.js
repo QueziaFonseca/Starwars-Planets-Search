@@ -15,11 +15,12 @@ function PlanetsProvider({ children }) {
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
   const [filteredData, setFilteredData] = useState(data);
-  const [filterByNumericValues, setFilterByNumericValues] = useState([{
-    column: 'population',
-    comparison: 'maior que',
-    value: '0',
-  }]);
+  const [filterByNumericValues, setFilterByNumericValues] = useState([]);
+  // Req 5: estado que controla o array dos options do select Column
+  const [columnsOptions, setColumnsOptions] = useState(
+    ['population', 'orbital_period', 'diameter',
+      'rotation_period', 'surface_water'],
+  );
 
   // Requisição à API
   const getResultsApi = async () => {
@@ -38,32 +39,36 @@ function PlanetsProvider({ children }) {
   useEffect(() => {
     const search = data.filter((planet) => planet.name.includes(filterByName.name)); // filtra o array da tabela de acordo com o nome
     setFilteredData(search); // atualiza o array filtrado
-  }, [data, filterByName, setFilteredData]);
+  }, [data, filterByName]);
 
   // Req 3 e 4: Filtra por comparação. Para este requisito consultei o PR de Regiane em : https://github.dev/tryber/sd-017-project-starwars-planets-search/pull/99/commits/21970f62f3b9eb5c901ca810099d2e127f6abd48
 
   useEffect(() => {
-    switch (filterByNumericValues.comparison) {
-    case 'maior que':
-      setFilteredData(filteredData
-        .filter((planet) => parseInt(
-          planet[filterByNumericValues.column], 10,
-        ) > filterByNumericValues.value));
-      break;
-    case 'menor que':
-      setFilteredData(filteredData
-        .filter((planet) => parseInt(
-          planet[filterByNumericValues.column], 10,
-        ) < filterByNumericValues.value));
-      break;
-    case 'igual a':
-      setFilteredData(filteredData.filter((
-        planet,
-      ) => planet[filterByNumericValues.column] === filterByNumericValues.value));
-      break;
-    default:
-      break;
+    if (filterByNumericValues.length > 0) {
+      const lastNumericFilter = filterByNumericValues[filterByNumericValues.length - 1];
+      switch (lastNumericFilter.comparison) {
+      case 'maior que':
+        setFilteredData(filteredData
+          .filter((planet) => parseInt(
+            planet[lastNumericFilter.column], 10,
+          ) > lastNumericFilter.value));
+        break;
+      case 'menor que':
+        setFilteredData(filteredData
+          .filter((planet) => parseInt(
+            planet[lastNumericFilter.column], 10,
+          ) < lastNumericFilter.value));
+        break;
+      case 'igual a':
+        setFilteredData(filteredData.filter((
+          planet,
+        ) => planet[lastNumericFilter.column] === lastNumericFilter.value));
+        break;
+      default:
+        break;
+      }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterByNumericValues]);
 
   const contextValue = {
@@ -82,6 +87,8 @@ function PlanetsProvider({ children }) {
     setValue,
     filteredData,
     setFilteredData,
+    columnsOptions,
+    setColumnsOptions,
   };
 
   return (

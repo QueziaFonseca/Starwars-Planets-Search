@@ -3,6 +3,7 @@ import PlanetsContext from '../context/PlanetsContext';
 
 function NumberFilter() {
   const {
+    filterByNumericValues,
     setFilterByNumericValues,
     column,
     setColumn,
@@ -10,15 +11,18 @@ function NumberFilter() {
     setComparison,
     value,
     setValue,
+    columnsOptions,
+    setColumnsOptions,
   } = useContext(PlanetsContext);
 
-  const columnsOptions = ['population', 'orbital_period', 'diameter',
-    'rotation_period', 'surface_water'];
   const comparisonOptions = ['maior que', 'menor que', 'igual a'];
 
   const handleClick = () => {
     setFilterByNumericValues(
-      { column, comparison, value },
+      [...filterByNumericValues, { column, comparison, value }],
+    );
+    setColumnsOptions(
+      columnsOptions.filter((item) => item !== column),
     );
   };
 
