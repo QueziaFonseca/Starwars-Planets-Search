@@ -1,19 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import Loading from './Loading';
 
 function Table() {
   const {
-    data,
-    loading,
-    filterByName } = useContext(PlanetsContext);
-  const [filteredData, setFilteredData] = useState(data); // array filtrado renderizado na tabela
 
-  // Atualiza array filtrado que será renderizado na tebela
-  useEffect(() => {
-    const search = data.filter((planet) => planet.name.includes(filterByName.name)); // filtra o array da tabela de acordo com o
-    setFilteredData(search); // atualiza o array filtrado
-  }, [data, filterByName]);
+    loading,
+
+    filteredData,
+  } = useContext(PlanetsContext);
 
   if (loading) { return <Loading />; }
 

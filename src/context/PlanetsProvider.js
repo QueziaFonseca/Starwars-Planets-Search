@@ -4,9 +4,22 @@ import PlanetsContext from './PlanetsContext';
 import fetchPlanetsAPI from '../services/FetchPlanetsApi';
 
 function PlanetsProvider({ children }) {
-  const [data, setData] = useState([]); // estado referente aos dados da API
+  // Req 1: estado referente aos dados da API
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true); // estado referente a chamada do componente Loading
-  const [filterByName, setFilterByName] = useState({ name: '' }); // estado referente ao filtro por nome do planeta
+
+  // Req 2:estado referente ao filtro por nome do planeta
+  const [filterByName, setFilterByName] = useState({ name: '' });
+  // Req 3:
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState(0);
+  const [filteredData, setFilteredData] = useState(data);
+  const [filterByNumericValues, setFilterByNumericValues] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: '0',
+  });
 
   // Requisição à API
   const getResultsApi = async () => {
@@ -17,12 +30,41 @@ function PlanetsProvider({ children }) {
         setLoading(false); // atualiza estado referente a chamada do comp. Loading
       });
   };
-
-  // Função que faz requisição à API e chamada quando o componente é montado
-  // equivalente ao componentDidMount
+  // Req1: chamando a Função que faz requisição à API e chamada quando o componente é montado, equivalente ao componentDidMount
   useEffect(() => {
     getResultsApi();
   }, []);
+  // Req2: Filtra o array de planetas pelo nome e atualiza o array que é mapeado e renderizado na tabela
+  useEffect(() => {
+    const search = data.filter((planet) => planet.name.includes(filterByName.name)); // filtra o array da tabela de acordo com o nome
+    setFilteredData(search); // atualiza o array filtrado
+  }, [data, filterByName, setFilteredData]);
+
+  // Req3: Filtra por comparação. Para este requisito consultei o PR de Regiane em : https://github.dev/tryber/sd-017-project-starwars-planets-search/pull/99/commits/21970f62f3b9eb5c901ca810099d2e127f6abd48
+
+  useEffect(() => {
+    switch (filterByNumericValues.comparison) {
+    case 'maior que':
+      setFilteredData(data
+        .filter((planet) => parseInt(
+          planet[filterByNumericValues.column], 10,
+        ) > filterByNumericValues.value));
+      break;
+    case 'menor que':
+      setFilteredData(data
+        .filter((planet) => parseInt(
+          planet[filterByNumericValues.column], 10,
+        ) < filterByNumericValues.value));
+      break;
+    case 'igual a':
+      setFilteredData(data.filter((
+        planet,
+      ) => planet[filterByNumericValues.column] === filterByNumericValues.value));
+      break;
+    default:
+      break;
+    }
+  }, [filterByNumericValues]);
 
   const contextValue = {
     getResultsApi,
@@ -30,6 +72,16 @@ function PlanetsProvider({ children }) {
     loading,
     filterByName,
     setFilterByName,
+    filterByNumericValues,
+    setFilterByNumericValues,
+    column,
+    setColumn,
+    comparison,
+    setComparison,
+    value,
+    setValue,
+    filteredData,
+    setFilteredData,
   };
 
   return (
