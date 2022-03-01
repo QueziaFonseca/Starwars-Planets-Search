@@ -10,16 +10,16 @@ function PlanetsProvider({ children }) {
 
   // Req 2:estado referente ao filtro por nome do planeta
   const [filterByName, setFilterByName] = useState({ name: '' });
-  // Req 3:
+  // Req 3 e 4:
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
   const [filteredData, setFilteredData] = useState(data);
-  const [filterByNumericValues, setFilterByNumericValues] = useState({
+  const [filterByNumericValues, setFilterByNumericValues] = useState([{
     column: 'population',
     comparison: 'maior que',
     value: '0',
-  });
+  }]);
 
   // Requisição à API
   const getResultsApi = async () => {
@@ -40,24 +40,24 @@ function PlanetsProvider({ children }) {
     setFilteredData(search); // atualiza o array filtrado
   }, [data, filterByName, setFilteredData]);
 
-  // Req3: Filtra por comparação. Para este requisito consultei o PR de Regiane em : https://github.dev/tryber/sd-017-project-starwars-planets-search/pull/99/commits/21970f62f3b9eb5c901ca810099d2e127f6abd48
+  // Req 3 e 4: Filtra por comparação. Para este requisito consultei o PR de Regiane em : https://github.dev/tryber/sd-017-project-starwars-planets-search/pull/99/commits/21970f62f3b9eb5c901ca810099d2e127f6abd48
 
   useEffect(() => {
     switch (filterByNumericValues.comparison) {
     case 'maior que':
-      setFilteredData(data
+      setFilteredData(filteredData
         .filter((planet) => parseInt(
           planet[filterByNumericValues.column], 10,
         ) > filterByNumericValues.value));
       break;
     case 'menor que':
-      setFilteredData(data
+      setFilteredData(filteredData
         .filter((planet) => parseInt(
           planet[filterByNumericValues.column], 10,
         ) < filterByNumericValues.value));
       break;
     case 'igual a':
-      setFilteredData(data.filter((
+      setFilteredData(filteredData.filter((
         planet,
       ) => planet[filterByNumericValues.column] === filterByNumericValues.value));
       break;
