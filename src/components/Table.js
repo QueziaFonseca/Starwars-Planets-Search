@@ -18,7 +18,7 @@ function Table() {
         <tr>
           <th>name</th>
           <th>rotation Period</th>
-          <th>orbitalPeriod</th>
+          <th>orbital Period</th>
           <th>diameter</th>
           <th>climate</th>
           <th>gravity</th>
