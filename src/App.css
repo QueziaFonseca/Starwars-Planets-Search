@@ -1,41 +1,68 @@
-.App {
+/* stylelint-disable declaration-colon-space-after */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: rgb(19, 18, 18);
+  color: white;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media ( prefers-reduced-motion : no-preference ) {
-
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  align-items: center;
-  background-color: #282c34;
-  color: white;
+header {
+  background-color: rgb(19, 18, 18);
   display: flex;
-  flex-direction: column;
-  font-size: calc(10px + 2vmin);
   justify-content: center;
-  min-height: 100vh;
+  padding: 10px 0;
 }
 
-.App-link {
-  color: #61dafb;
+.header-title {
+  padding: 10px 0;
 }
 
-@keyframes App-logo-spin {
-
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+.numeric-filters-container {
+  display: flex;
+  justify-content: space-around;
+  padding: 50px 0;
 }
+
+.search-bar-container {
+  color: white;
+  padding: 50px 0;
+}
+
+.input {
+  background-color: rgb(37, 34, 34);
+  border-radius: 5px;
+  color: white;
+  margin: 1px 0 1px 8px;
+  padding: 5px;
+  width: 130px;
+}
+
+.form-button {
+  background-color: rgb(37, 34, 34);
+  border-color: yellow;
+  border-radius: 5px;
+  color:yellow;
+  font-weight: 900;
+  padding: 5px;
+  width: 130px;
+}
+
+table {
+  border-collapse: collapse;
+  text-align: center;
+  width: 60%;
+}
+
+thead {
+  background-color: black;
+  height: 80px;
+}
+
+/* tbody {
+  background-color: lightgray;
+
+} */
