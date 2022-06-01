@@ -6,9 +6,10 @@ function SearchBar() {
     loading, filterByName, setFilterByName } = useContext(PlanetsContext);
 
   return (
-    <section>
-      <form>
+    <section className="search-bar-container">
+      <form className="search-bar-form">
         <input
+          className="input"
           data-testid="name-filter"
           type="text"
           name="name"

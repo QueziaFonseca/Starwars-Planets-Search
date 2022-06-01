@@ -27,8 +27,9 @@ function NumberFilter() {
   };
 
   return (
-    <section>
+    <section className="numeric-filters-container">
       <select
+      className="input"
         data-testid="column-filter"
         name="column"
         value={ column }
@@ -44,6 +45,7 @@ function NumberFilter() {
         ))}
       </select>
       <select
+        className="input"
         data-testid="comparison-filter"
         name="comparison"
         value={ comparison }
@@ -60,6 +62,7 @@ function NumberFilter() {
       </select>
 
       <input
+        className="input"
         data-testid="value-filter"
         type="number"
         name="value"
@@ -69,6 +72,7 @@ function NumberFilter() {
       />
 
       <button
+        className="form-button"
         data-testid="button-filter"
         type="button"
         onClick={ handleClick }
