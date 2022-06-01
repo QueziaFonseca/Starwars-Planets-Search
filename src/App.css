@@ -53,16 +53,18 @@ header {
 
 table {
   border-collapse: collapse;
+  max-width: 90%;
   text-align: center;
-  width: 60%;
 }
 
 thead {
   background-color: black;
   height: 80px;
+  word-wrap: break-word;
 }
 
-/* tbody {
-  background-color: lightgray;
-
-} */
+tr th, tr td {
+  padding: 8px;
+  text-align: center;
+  width: 10%;
+}
