@@ -1,5 +1,5 @@
 # Boas vindas ao repositório do projeto Starwars Planets Search em context api e hooks!
-Uma lista com filtros de planetas do universo de Star Wars usando **React Context API e Hooks** para controlar os estados globais.
+Projeto Front-end: Aplicação oferece diversos filtros para pesquisa planetas do universo de Star Wars usando as techonologias **React Context API e Hooks** para controlar os estados.
 ---
 
 # Habilidades
